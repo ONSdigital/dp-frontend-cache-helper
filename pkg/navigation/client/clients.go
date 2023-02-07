@@ -12,7 +12,7 @@ import (
 
 // Clienter is an interface with methods required for navigation cache
 type Clienter interface {
-	AddNavigationCache(ctx context.Context, updateInterval time.Duration) error
+	AddNavigationCache(ctx context.Context, updateInterval *time.Duration) error
 	GetNavigationData(ctx context.Context, lang string) (*topicModel.Navigation, error)
 	Close()
 	StartBackgroundUpdate(ctx context.Context, errorChannel chan error)

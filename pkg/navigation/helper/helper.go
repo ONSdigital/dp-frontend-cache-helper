@@ -14,7 +14,6 @@ import (
 	"github.com/ONSdigital/log.go/v2/log"
 )
 
-
 type Helper struct {
 	Clienter  client.Clienter
 	Config    Config
@@ -24,7 +23,7 @@ type Helper struct {
 
 type Config struct {
 	APIRouterURL                string
-	CacheUpdateInterval         time.Duration
+	CacheUpdateInterval         *time.Duration
 	EnableNewNavBar             bool
 	EnableCensusTopicSubsection bool
 	CensusTopicID               string
@@ -34,7 +33,6 @@ type Config struct {
 }
 
 func Init(ctx context.Context, cfg Config) (svc *Helper, err error) {
-
 	svc = &Helper{}
 	svc.CacheList = cache.List{}
 	svc.Clients = &client.Clients{
@@ -45,21 +43,21 @@ func Init(ctx context.Context, cfg Config) (svc *Helper, err error) {
 	if svc.Config.IsPublishingMode {
 		svc.Clienter = client.NewPublishingClient(ctx, svc.Clients, cfg.Languages)
 	} else {
-		svc.Clienter, err = client.NewWebClient(ctx, svc.Clients, cfg.CacheUpdateInterval, cfg.Languages)
+		svc.Clienter, err = client.NewWebClient(ctx, svc.Clients, cfg.Languages)
 		if err != nil {
 			log.Fatal(ctx, "failed to create homepage web client", err)
 			return
 		}
 	}
-	if err = svc.Clienter.AddNavigationCache(ctx, cfg.CacheUpdateInterval); err != nil {
-		log.Fatal(ctx, "failed to add navigation cache to homepage client", err)
+	if err = svc.Clienter.AddNavigationCache(ctx, svc.Config.CacheUpdateInterval); err != nil {
+		log.Fatal(ctx, "failed to add navigation cache", err)
 		return
 	}
 
 	if svc.Config.EnableCensusTopicSubsection {
 		// Initialise caching census topics
 		cache.CensusTopicID = svc.Config.CensusTopicID
-		svc.CacheList.CensusTopic, err = cache.NewTopicCache(ctx, &svc.Config.CacheUpdateInterval)
+		svc.CacheList.CensusTopic, err = cache.NewTopicCache(ctx, svc.Config.CacheUpdateInterval)
 		if err != nil {
 			log.Error(ctx, "failed to create topics cache", err)
 			return

@@ -40,7 +40,7 @@ var _ Clienter = &ClienterMock{}
 //	}
 type ClienterMock struct {
 	// AddNavigationCacheFunc mocks the AddNavigationCache method.
-	AddNavigationCacheFunc func(ctx context.Context, updateInterval time.Duration) error
+	AddNavigationCacheFunc func(ctx context.Context, updateInterval *time.Duration) error
 
 	// CloseFunc mocks the Close method.
 	CloseFunc func()
@@ -85,7 +85,7 @@ type ClienterMock struct {
 }
 
 // AddNavigationCache calls AddNavigationCacheFunc.
-func (mock *ClienterMock) AddNavigationCache(ctx context.Context, updateInterval time.Duration) error {
+func (mock *ClienterMock) AddNavigationCache(ctx context.Context, updateInterval *time.Duration) error {
 	if mock.AddNavigationCacheFunc == nil {
 		panic("ClienterMock.AddNavigationCacheFunc: method is nil but Clienter.AddNavigationCache was just called")
 	}
@@ -94,7 +94,7 @@ func (mock *ClienterMock) AddNavigationCache(ctx context.Context, updateInterval
 		UpdateInterval time.Duration
 	}{
 		Ctx:            ctx,
-		UpdateInterval: updateInterval,
+		UpdateInterval: *updateInterval,
 	}
 	mock.lockAddNavigationCache.Lock()
 	mock.calls.AddNavigationCache = append(mock.calls.AddNavigationCache, callInfo)

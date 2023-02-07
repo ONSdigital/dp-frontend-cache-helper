@@ -25,8 +25,8 @@ func NewPublishingClient(ctx context.Context, clients *Clients, languages []stri
 	}
 }
 
-func (hpc *PublishingClient) AddNavigationCache(ctx context.Context, updateInterval time.Duration) error {
-	navigationCache, err := cache.NewNavigationCache(ctx, &updateInterval)
+func (hpc *PublishingClient) AddNavigationCache(ctx context.Context, updateInterval *time.Duration) error {
+	navigationCache, err := cache.NewNavigationCache(ctx, updateInterval)
 	if err != nil {
 		log.Error(ctx, "failed to create navigation cache", err, log.Data{"update_interval": updateInterval})
 		return err

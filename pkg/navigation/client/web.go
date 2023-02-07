@@ -16,7 +16,7 @@ type WebClient struct {
 	languages       []string
 }
 
-func NewWebClient(ctx context.Context, clients *Clients, updateInterval time.Duration, languages []string) (Clienter, error) {
+func NewWebClient(ctx context.Context, clients *Clients, languages []string) (Clienter, error) {
 	return &WebClient{
 		Updater: Updater{
 			clients: clients,
@@ -25,8 +25,8 @@ func NewWebClient(ctx context.Context, clients *Clients, updateInterval time.Dur
 	}, nil
 }
 
-func (hwc *WebClient) AddNavigationCache(ctx context.Context, updateInterval time.Duration) error {
-	navigationCache, err := cache.NewNavigationCache(ctx, &updateInterval)
+func (hwc *WebClient) AddNavigationCache(ctx context.Context, updateInterval *time.Duration) error {
+	navigationCache, err := cache.NewNavigationCache(ctx, updateInterval)
 	if err != nil {
 		log.Error(ctx, "failed to create navigation cache", err, log.Data{"update_interval": updateInterval})
 		return err
