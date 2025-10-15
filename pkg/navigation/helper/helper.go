@@ -46,12 +46,12 @@ func Init(ctx context.Context, cfg Config) (svc *Helper, err error) {
 		svc.Clienter, err = client.NewWebClient(ctx, svc.Clients, cfg.Languages)
 		if err != nil {
 			log.Fatal(ctx, "failed to create homepage web client", err)
-			return
+			return svc, err
 		}
 	}
 	if err = svc.Clienter.AddNavigationCache(ctx, svc.Config.CacheUpdateInterval); err != nil {
 		log.Fatal(ctx, "failed to add navigation cache", err)
-		return
+		return svc, err
 	}
 
 	if svc.Config.EnableCensusTopicSubsection {
@@ -60,22 +60,22 @@ func Init(ctx context.Context, cfg Config) (svc *Helper, err error) {
 		svc.CacheList.CensusTopic, err = cache.NewTopicCache(ctx, svc.Config.CacheUpdateInterval)
 		if err != nil {
 			log.Error(ctx, "failed to create topics cache", err)
-			return
+			return svc, err
 		}
 
 		if svc.Config.IsPublishingMode {
 			if err = svc.CacheList.CensusTopic.AddUpdateFunc(ctx, cache.CensusTopicID, cachePrivate.UpdateCensusTopic(ctx, svc.Config.CensusTopicID, svc.Config.ServiceAuthToken, svc.Clients.Topic)); err != nil {
 				log.Error(ctx, "failed to create topics cache", err)
-				return
+				return svc, err
 			}
 		} else {
 			if err = svc.CacheList.CensusTopic.AddUpdateFunc(ctx, cache.CensusTopicID, cachePublic.UpdateCensusTopic(ctx, svc.Config.CensusTopicID, svc.Clients.Topic)); err != nil {
 				log.Error(ctx, "failed to create topics cache", err)
-				return
+				return svc, err
 			}
 		}
 	}
-	return
+	return svc, err
 }
 
 func (svc *Helper) RunUpdates(ctx context.Context, svcErrors chan error) {
