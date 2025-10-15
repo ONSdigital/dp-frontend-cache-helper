@@ -3,7 +3,7 @@ all: audit test build
 
 .PHONY: audit
 audit:
-	go list -json -m all | nancy sleuth
+	dis-vulncheck
 
 .PHONY: build
 build:
