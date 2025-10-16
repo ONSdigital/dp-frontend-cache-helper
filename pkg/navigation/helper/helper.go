@@ -4,12 +4,12 @@ import (
 	"context"
 	"time"
 
+	model "github.com/ONSdigital/dis-design-system-go/model"
 	"github.com/ONSdigital/dp-frontend-cache-helper/internal/navigation/cache"
 	cachePrivate "github.com/ONSdigital/dp-frontend-cache-helper/internal/navigation/cache/private"
 	cachePublic "github.com/ONSdigital/dp-frontend-cache-helper/internal/navigation/cache/public"
 	mapper "github.com/ONSdigital/dp-frontend-cache-helper/internal/navigation/mapper"
 	client "github.com/ONSdigital/dp-frontend-cache-helper/pkg/navigation/client"
-	model "github.com/ONSdigital/dp-renderer/v2/model"
 	topicCli "github.com/ONSdigital/dp-topic-api/sdk"
 	"github.com/ONSdigital/log.go/v2/log"
 )
