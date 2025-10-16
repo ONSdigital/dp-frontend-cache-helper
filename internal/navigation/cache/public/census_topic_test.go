@@ -64,11 +64,11 @@ func TestUpdateCensusTopic(t *testing.T) {
 	ctx := context.Background()
 
 	mockedTopicClient := &mockTopicCli.ClienterMock{
-		GetTopicPublicFunc: func(ctx context.Context, reqHeaders sdk.Headers, id string) (*models.Topic, topicCliErr.Error) {
+		GetTopicPublicFunc: func(_ context.Context, _ sdk.Headers, _ string) (*models.Topic, topicCliErr.Error) {
 			return &testCensusRootTopic, nil
 		},
 
-		GetSubtopicsPublicFunc: func(ctx context.Context, reqHeaders sdk.Headers, id string) (*models.PublicSubtopics, topicCliErr.Error) {
+		GetSubtopicsPublicFunc: func(_ context.Context, _ sdk.Headers, id string) (*models.PublicSubtopics, topicCliErr.Error) {
 			switch id {
 			case testCensusTopicID:
 				return testCensusSubTopics, nil
@@ -99,7 +99,7 @@ func TestUpdateCensusTopic(t *testing.T) {
 
 	Convey("Given an error in getting census topic from topic-api", t, func() {
 		failedCensusTopicClient := &mockTopicCli.ClienterMock{
-			GetTopicPublicFunc: func(ctx context.Context, reqHeaders sdk.Headers, id string) (*models.Topic, topicCliErr.Error) {
+			GetTopicPublicFunc: func(_ context.Context, _ sdk.Headers, _ string) (*models.Topic, topicCliErr.Error) {
 				return nil, topicCliErr.StatusError{
 					Err: errors.New("unexpected error"),
 				}
@@ -117,10 +117,10 @@ func TestUpdateCensusTopic(t *testing.T) {
 
 	Convey("Given census topics public items is nil", t, func() {
 		censusTopicNilClient := &mockTopicCli.ClienterMock{
-			GetTopicPublicFunc: func(ctx context.Context, reqHeaders sdk.Headers, id string) (*models.Topic, topicCliErr.Error) {
+			GetTopicPublicFunc: func(_ context.Context, _ sdk.Headers, _ string) (*models.Topic, topicCliErr.Error) {
 				return &models.Topic{ID: "1234", Title: "Census", SubtopicIds: &[]string{}}, nil
 			},
-			GetSubtopicsPublicFunc: func(ctx context.Context, reqHeaders sdk.Headers, id string) (*models.PublicSubtopics, topicCliErr.Error) {
+			GetSubtopicsPublicFunc: func(_ context.Context, _ sdk.Headers, _ string) (*models.PublicSubtopics, topicCliErr.Error) {
 				return nil, topicCliErr.StatusError{
 					Err: errors.New("unexpected error"),
 				}

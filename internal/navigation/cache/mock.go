@@ -9,6 +9,8 @@ import (
 )
 
 // GetMockCacheList returns a mocked list of cache which contains the census topic cache and navigation cache
+//
+//nolint:revive //ignore unused parameter lang
 func GetMockCacheList(ctx context.Context, lang string) (*List, error) {
 	testCensusTopicCache, err := getMockCensusTopicCache(ctx)
 	if err != nil {

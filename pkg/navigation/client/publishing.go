@@ -16,6 +16,7 @@ type PublishingClient struct {
 	languages       []string
 }
 
+//nolint:revive //ignore unused parameter ctx
 func NewPublishingClient(ctx context.Context, clients *Clients, languages []string) Clienter {
 	return &PublishingClient{
 		Updater: Updater{

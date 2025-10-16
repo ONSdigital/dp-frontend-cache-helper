@@ -85,11 +85,11 @@ func TestUpdateCensusTopic(t *testing.T) {
 	ctx := context.Background()
 
 	mockedTopicClient := &mockTopic.ClienterMock{
-		GetTopicPrivateFunc: func(ctx context.Context, reqHeaders sdk.Headers, id string) (*models.TopicResponse, topicCliErr.Error) {
+		GetTopicPrivateFunc: func(_ context.Context, _ sdk.Headers, _ string) (*models.TopicResponse, topicCliErr.Error) {
 			return &testCensusRootTopicPrivate, nil
 		},
 
-		GetSubtopicsPrivateFunc: func(ctx context.Context, reqHeaders sdk.Headers, id string) (*models.PrivateSubtopics, topicCliErr.Error) {
+		GetSubtopicsPrivateFunc: func(_ context.Context, _ sdk.Headers, id string) (*models.PrivateSubtopics, topicCliErr.Error) {
 			switch id {
 			case testCensusTopicID:
 				return testCensusSubTopicsPrivate, nil
@@ -120,7 +120,7 @@ func TestUpdateCensusTopic(t *testing.T) {
 
 	Convey("Given an error in getting census topic from topic-api", t, func() {
 		failedCensusTopicClient := &mockTopic.ClienterMock{
-			GetTopicPrivateFunc: func(ctx context.Context, reqHeaders sdk.Headers, id string) (*models.TopicResponse, topicCliErr.Error) {
+			GetTopicPrivateFunc: func(_ context.Context, _ sdk.Headers, _ string) (*models.TopicResponse, topicCliErr.Error) {
 				return nil, topicCliErr.StatusError{
 					Err: errors.New("unexpected error"),
 				}
@@ -138,14 +138,14 @@ func TestUpdateCensusTopic(t *testing.T) {
 
 	Convey("Given census topics private items is nil", t, func() {
 		censusTopicsNilClient := &mockTopic.ClienterMock{
-			GetTopicPrivateFunc: func(ctx context.Context, reqHeaders sdk.Headers, id string) (*models.TopicResponse, topicCliErr.Error) {
+			GetTopicPrivateFunc: func(_ context.Context, _ sdk.Headers, _ string) (*models.TopicResponse, topicCliErr.Error) {
 				return &models.TopicResponse{
 					ID:   "1234",
 					Next: &models.Topic{ID: "1234", Title: "Census", SubtopicIds: &[]string{}},
 				}, nil
 			},
 
-			GetSubtopicsPrivateFunc: func(ctx context.Context, reqHeaders sdk.Headers, id string) (*models.PrivateSubtopics, topicCliErr.Error) {
+			GetSubtopicsPrivateFunc: func(_ context.Context, _ sdk.Headers, _ string) (*models.PrivateSubtopics, topicCliErr.Error) {
 				return nil, topicCliErr.StatusError{
 					Err: errors.New("unexpected error"),
 				}

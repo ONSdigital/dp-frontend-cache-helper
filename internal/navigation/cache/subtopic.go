@@ -40,6 +40,7 @@ func (t *SubtopicsIDs) GetSubtopicItems() map[string]*models.Topic {
 func (t *SubtopicsIDs) GetSubtopicsIDsQuery() string {
 	lenSyncMap := func(m *sync.Map) int {
 		var i int
+		//nolint:revive //ignore unused parameter k
 		m.Range(func(k, v interface{}) bool {
 			i++
 			return true
@@ -48,6 +49,7 @@ func (t *SubtopicsIDs) GetSubtopicsIDsQuery() string {
 	}
 
 	ids := make([]string, 0, lenSyncMap(&t.subtopicsMap))
+	//nolint:revive //ignore unused parameter value
 	t.subtopicsMap.Range(func(key, value any) bool {
 		ids = append(ids, fmt.Sprint(key))
 		return true

@@ -16,6 +16,7 @@ type WebClient struct {
 	languages       []string
 }
 
+//nolint:revive //ignore unused parameter ctx
 func NewWebClient(ctx context.Context, clients *Clients, languages []string) (Clienter, error) {
 	return &WebClient{
 		Updater: Updater{
@@ -59,7 +60,6 @@ func getCachingKeyForNavigationLanguage(lang string) string {
 
 func (hwc *WebClient) StartBackgroundUpdate(ctx context.Context, errorChannel chan error) {
 	for _, lang := range hwc.languages {
-
 		navigationlangKey := getCachingKeyForNavigationLanguage(lang)
 
 		if hwc.navigationCache != nil {
