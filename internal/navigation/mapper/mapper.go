@@ -1,7 +1,7 @@
 package mapper
 
 import (
-	coreModel "github.com/ONSdigital/dis-design-system-go/model"
+	coreModel "github.com/ONSdigital/dis-design-system-go/v2/model"
 	topicModel "github.com/ONSdigital/dp-topic-api/models"
 )
 

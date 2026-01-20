@@ -3,7 +3,7 @@ module github.com/ONSdigital/dp-frontend-cache-helper
 go 1.24.0
 
 require (
-	github.com/ONSdigital/dis-design-system-go v1.3.0
+	github.com/ONSdigital/dis-design-system-go/v2 v2.0.0
 	github.com/ONSdigital/dp-cache v0.4.0
 	github.com/ONSdigital/dp-topic-api v0.23.0
 	github.com/ONSdigital/log.go/v2 v2.5.0

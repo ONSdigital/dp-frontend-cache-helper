@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	model "github.com/ONSdigital/dis-design-system-go/model"
+	model "github.com/ONSdigital/dis-design-system-go/v2/model"
 	"github.com/ONSdigital/dp-frontend-cache-helper/internal/navigation/cache"
 	cachePrivate "github.com/ONSdigital/dp-frontend-cache-helper/internal/navigation/cache/private"
 	cachePublic "github.com/ONSdigital/dp-frontend-cache-helper/internal/navigation/cache/public"
